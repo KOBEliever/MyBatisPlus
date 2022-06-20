@@ -1,5 +1,8 @@
 package com.cqu;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cqu.dao.UserDao;
@@ -54,5 +57,28 @@ class MyBatisPlusFirstApplicationTests {
         System.out.println("一共多少页："+page.getPages());
         System.out.println("一共多少条数据："+page.getTotal());
         System.out.println("数据："+page.getRecords());
+    }
+    @Test
+    void TestGetByParam(){
+//        //方式一：按条件查询
+//        QueryWrapper queryWrapper = new QueryWrapper();
+//        //小于
+//        queryWrapper.lt("age",18);
+//        List<User> userList = userDao.selectList(queryWrapper);
+//        System.out.println(userList);
+//        //方式二：lambda格式
+//        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+//        //小于
+//        queryWrapper.lambda().lt(User::getAge,18);
+//        List<User> userList = userDao.selectList(queryWrapper);
+//        System.out.println(userList);
+        //方式三：lambda格式
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>();
+        //小于
+        lambdaQueryWrapper.lt(User::getAge,40);
+        //大于
+        lambdaQueryWrapper.gt(User::getAge,18);
+        List<User> userList = userDao.selectList(lambdaQueryWrapper);
+        System.out.println(userList);
     }
 }
