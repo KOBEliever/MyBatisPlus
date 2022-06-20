@@ -25,7 +25,7 @@ class MyBatisPlusFirstApplicationTests {
     void testUpdate(){
         User user = new User();
         user.setId(4L);
-        user.setName("Tom666");
+        user.setName("Tom888");
         user.setTel("wowowow");
         userDao.updateById(user);
     }
