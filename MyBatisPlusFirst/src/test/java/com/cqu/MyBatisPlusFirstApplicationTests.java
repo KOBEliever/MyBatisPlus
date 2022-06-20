@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cqu.dao.UserDao;
 import com.cqu.domain.User;
+import com.cqu.query.UserQuery;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -73,11 +74,16 @@ class MyBatisPlusFirstApplicationTests {
 //        List<User> userList = userDao.selectList(queryWrapper);
 //        System.out.println(userList);
         //方式三：lambda格式
+
+        UserQuery userQuery = new UserQuery();
+//        userQuery.setAge(18);
+        userQuery.setAge2(40);
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>();
         //小于
-        lambdaQueryWrapper.lt(User::getAge,40);
+        //先判断第一个参数是否为true，若为true则连接当前条件
+        lambdaQueryWrapper.lt(null != userQuery.getAge2(),User::getAge,userQuery.getAge2());
         //大于
-        lambdaQueryWrapper.gt(User::getAge,18);
+        lambdaQueryWrapper.gt(null != userQuery.getAge(),User::getAge,userQuery.getAge());
         List<User> userList = userDao.selectList(lambdaQueryWrapper);
         System.out.println(userList);
     }
